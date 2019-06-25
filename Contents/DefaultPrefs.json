@@ -1,8 +1,8 @@
 [
   {
-    "id": "save_srt",
-    "label": "Convert to SRT format",
+    "id": "remove_smi",
+    "label": "변환 후 smi 파일 삭제",
     "type": "bool",
-    "default": "false"
+    "default": "true"
   }
 ]
