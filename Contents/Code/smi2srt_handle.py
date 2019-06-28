@@ -140,7 +140,7 @@ class SMI2SRTHandle(object):
                     elif os.path.isfile(eachfile):
                         if eachfile[-4:].lower() == '.smi':
                             rndx = eachfile.rfind('.')
-                            if SMI2SRTHandle.no_append_ko:
+                            if SMI2SRTHandle.no_append_ko or eachfile.lower().endswith('.kor.smi') or eachfile.lower().endswith('.ko.smi'):
                                 srt_file = '%s.srt' % eachfile[0:rndx]
                             else:
                                 srt_file = '%s.ko.srt' % eachfile[0:rndx]
@@ -174,9 +174,9 @@ class SMI2SRTHandle(object):
                             elif ret['ret'] == "not_smi_is_srt":
                                 shutil.move(eachfile, srt_file)
                                 log_debug("move to srt..")
-                            elif ret['ret'] == "not_smi_is_torrent":
-                                shutil.move(eachfile, eachfile.replace('.smi', '.torrent'))
-                                log_debug("move to torrent..")
+                            #elif ret['ret'] == "not_smi_is_torrent":
+                            #    shutil.move(eachfile, eachfile.replace('.smi', '.torrent'))
+                            #    log_debug("move to torrent..")
                             SMI2SRTHandle.result_list['list'].append(ret)
                         elif eachfile[-7:].lower() == '.ko.srt' or eachfile[-8:].lower() == '.kor.srt' or (eachfile[-7]== '.' and  eachfile[-4:].lower()== '.srt'):
                             #log_debug("pass : %s", eachfile)
@@ -396,8 +396,8 @@ class SMI2SRTHandle(object):
             result = re.compile(r'\d{2}\:\d{2}\:\d{2}\,\d{3}').findall(text)
             if len(result) > 10:
                 return "not_smi_is_srt"
-            if text.strip().startswith('d8:announce'):
-                return "not_smi_is_torrent"
+            #if text.strip().startswith('d8:announce'):
+            #    return "not_smi_is_torrent"
             return "fail"
         except Exception as e: 
             log_debug('Exception:%s', e)
